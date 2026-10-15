@@ -4,17 +4,19 @@ import dotenv from "dotenv";
 import pool from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import errorHandling from "./middleware/errorHandler.js";
-import requestLogger from "./middleware/requestLogger.js";
+import authMiddleware from "./middleware/authMiddleware.js";
 import createUserTable from "./data/createUserTable.js";
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
+
 
 // Middleware
 app.use(requestLogger);
 app.use(express.json());
 app.use(cors());
+app.use("/api",authMiddleware);
 
 // Routes
 app.use("/api/user", userRoutes);
@@ -31,6 +33,7 @@ app.get("/", async (req, res) => {
   res.send(`The database name is :${result.rows[0].current_database}`);
 });
 //server running
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http:localhost:${port}`);
+
 });
