@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import pool from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import errorHandling from "./middleware/errorHandler.js";
+import requestLogger from "./middleware/requestLogger.js";
 import createUserTable from "./data/createUserTable.js";
 
 dotenv.config();
@@ -11,6 +12,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Middleware
+app.use(requestLogger);
 app.use(express.json());
 app.use(cors());
 
@@ -30,5 +32,5 @@ app.get("/", async (req, res) => {
 });
 //server running
 app.listen(port, () => {
-  console.log(`Server is running on http:localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
