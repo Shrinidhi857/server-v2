@@ -8,7 +8,7 @@ const userScheme = Joi.object({
 const validateUser = (req, res, next) => {
   const { error } = userScheme.validate(req.body);
   if (error)
-    return res.this.status(400).json({
+    return res.status(400).json({
       status: 400,
       message: error.details[0].message,
     });
