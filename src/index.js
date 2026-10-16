@@ -17,6 +17,10 @@ app.use(requestLogger);
 app.use(express.json());
 app.use(cors());
 app.use("/api",authMiddleware);
+app.get("/", async (req, res) => {
+  const result = await pool.query("SELECT  current_database()");
+  res.send(`The database name is :${result.rows[0].current_database}`);
+});
 
 // Routes
 app.use("/api/user", userRoutes);
